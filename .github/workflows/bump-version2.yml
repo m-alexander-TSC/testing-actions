@@ -30,5 +30,4 @@ jobs:
     - name: Force push `latest` tag
       run: |
         git tag -d latest
-        git tag -f latest
-        git push origin latest
+        git tag latest
