@@ -6,6 +6,8 @@ on:
       - closed
     branches:
       - main
+env:
+  TAG: ""
 
 jobs:
   build:
@@ -27,19 +29,13 @@ jobs:
         PRERELEASE: false
         DEFAULT_BUMP: patch
 
-    - name: Get tag just created
-      id: get_tag
+    - name: Remove latest tag get new tag
       run: |
+        if git tag | grep latest; then git tag -d latest; fi
         tag=$(git describe --tags --abbrev=0)
-        echo "tag=$tag"
+        echo "TAG=$tag"
 
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ steps.get_tag.outputs.tag }}
-      run: |
-        echo $tag
-        echo "$tag"
-        gh release create $tag --repo="$GITHUB_REPOSITORY" --title="${tag#v}" --generate-notes
-
-  
+      run: gh release create latest --repo="$GITHUB_REPOSITORY" --title=$TAG --generate-notes
