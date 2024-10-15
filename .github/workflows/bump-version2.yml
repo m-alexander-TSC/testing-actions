@@ -28,6 +28,7 @@ jobs:
         DEFAULT_BUMP: patch
 
     - name: Get tag just created
+      id: get_tag
       run: |
         tag=$(git describe --tags --abbrev=0)
         echo "tag=$tag"
@@ -35,12 +36,7 @@ jobs:
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: "$tag"
+        tag: ${{ steps.get_tag.outputs.tag }}
       run: gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="$tag" --generate-notes
 
-    - name: Create latest tag for new release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: "$tag"
-      run: git tag latest -m "Release $tag"
   
