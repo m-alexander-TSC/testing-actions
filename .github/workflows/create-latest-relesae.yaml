@@ -31,7 +31,7 @@ jobs:
 
     - name: Remove latest tag get new tag just created
       run: |
-        if git tag | grep latest; then gp --delete origin latest; fi
+        if git tag | grep latest; then git push --delete origin latest; fi
         tag=$(git describe --tags --abbrev=0)
         echo "TAG=$tag"
 
