@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  PRERELEASE: true # This should be set to false, set to true if you want to create a prerelease tag
+  PRERELEASE: false # This should be set to false, set to true if you want to create a prerelease tag
 
 jobs:
   version:
@@ -39,13 +39,11 @@ jobs:
 
     - name: Get recent merged branch name
       id: get_branch_name
-      if: ${{ env.PRERELEASE == 'false' }}
       uses: tonynguyenit18/github-action-custom-vars@v1
     - run: echo $RECENT_MERGED_BRANCH_NAME
     - run: echo "BRANCH=$RECENT_MERGED_BRANCH_NAME" >> $GITHUB_ENV
 
     - name: Create release for the new tag
-      if: ${{ env.PRERELEASE == 'false' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.BRANCH }}  --generate-notes
