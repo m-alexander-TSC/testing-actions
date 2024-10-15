@@ -30,7 +30,6 @@ jobs:
     - name: Refresh latest tag
       run: |
         git tag -d latest
-        git tag latest
   
     - name: Release latest
       uses: ncipollo/release-action@v1
