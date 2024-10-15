@@ -29,7 +29,7 @@ jobs:
 
     - name: Remove latest tag get new tag
       run: |
-        git tag -d latest
+        if git tag | grep latest; then git tag -d latest; fi
         tag=$(git describe --tags --abbrev=0)
         echo "tag=$tag"
 
