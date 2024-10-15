@@ -36,17 +36,17 @@ jobs:
 
     - name: Get new tag
       id: get_tag
-      run: echo "::set-output name=TAG::$tag"
+      run: echo "TAG=$tag" >> $GITHUB_ENV
 
     - name: Get recent merged branch name
       id: get_branch_name
       uses: tonynguyenit18/github-action-custom-vars@v1
-    - run: echo "::set-output name=BRANCH::=$RECENT_MERGED_BRANCH_NAME"
+    - run: echo "BRANCH=$RECENT_MERGED_BRANCH_NAME" >> $GITHUB_ENV
 
     - name: Create release for the new tag
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh release create ${{ steps.get_tag.outputs.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ steps.get_branch_name.outputs.BRANCH }} --generate-notes
+      run: gh release create $TAG --repo="$GITHUB_REPOSITORY" --title=$BRANCH --generate-notes
 
     - name: Create new latest tag for the release
       run: |
