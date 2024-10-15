@@ -37,6 +37,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.get_tag.outputs.tag }}
-      run: gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="$tag" --generate-notes
+      run: |
+        echo $tag
+        echo "$tag"
+        gh release create $tag --repo="$GITHUB_REPOSITORY" --title="${tag#v}" --generate-notes
 
   
