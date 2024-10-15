@@ -30,6 +30,7 @@ jobs:
     - name: Refresh latest tag
       run: |
         git tag -d latest
+        git push --tags --force
 
     - name: Create release
       env:
