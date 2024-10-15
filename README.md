@@ -4,7 +4,7 @@
 - A GitHub action creates a new semver version tag and release.  
 - A `latest` tag is recreated for the latest release.
 - The versioning defaults to patch.  
-- To advance the version, put `#patch`, `#minor`, or `#major ` in a commit message.  Which ever is the highest increment will be applied (major/minor/patch)
+- To advance the version, put `#patch`, `#minor`, or `#major` in a commit message.  Which ever is the highest increment will be applied (major/minor/patch)
  
 ## Referencing templates in build & deploy yaml pipelines
 ```
@@ -22,3 +22,5 @@ As a consumer of this repo, you get two choices for how to do versioning:
 
 ## References
 Tagging task: https://github.com/anothrNick/github-tag-action
+
+- test
