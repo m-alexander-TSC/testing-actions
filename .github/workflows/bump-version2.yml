@@ -27,7 +27,7 @@ jobs:
         PRERELEASE: false
         DEFAULT_BUMP: patch
 
-    - name: Push changes
+    - name: Release latest
       uses: ncipollo/release-action@v1
-        with:
-          tag: latest
+      with:
+        tag: latest
