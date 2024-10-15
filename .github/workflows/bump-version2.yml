@@ -29,15 +29,15 @@ jobs:
 
     - name: Refresh latest tag
       run: |
+        tag=$(git describe --tags --abbrev=0)
         git tag -d latest
-        git push --tags --force
 
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: latest
       run: |
-        gh release create "$tag" \
+        gh release create "latest" \
         --repo="$GITHUB_REPOSITORY" \
         --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
         --generate-notes

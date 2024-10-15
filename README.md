@@ -8,3 +8,5 @@ Action testing release version
 
 ## Testing
 - To create a test release, set `PRERELEASE: true` in the 'bump-version.yml`
+
+test18
