@@ -36,8 +36,9 @@ jobs:
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: $tag
       run: gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="$tag" --generate-notes
 
     - name: Create latest tag for new release
-      run: git tag latest
+      run: git tag latest -m "Release $tag"
   
