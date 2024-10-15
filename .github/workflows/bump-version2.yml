@@ -27,7 +27,7 @@ jobs:
         PRERELEASE: false
         DEFAULT_BUMP: patch
 
-    - name: Refresh latest tag
+    - name: Remove latest tag get new tag
       run: |
         tag=$(git describe --tags --abbrev=0)
         git tag -d latest
@@ -37,7 +37,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: latest
       run: |
-        gh release create "latest" \
+        gh release create "{$tag}" \
         --repo="$GITHUB_REPOSITORY" \
         --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
         --generate-notes
+
+    - name: Create latest tag for new release
+      run: git tag latest
+  
