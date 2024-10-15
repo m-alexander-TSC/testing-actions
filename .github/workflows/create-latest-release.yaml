@@ -7,8 +7,11 @@ on:
     branches:
       - main
 
+env:
+  PRERELEASE: false # This should be set to false, set to true if you want to create a prerelease tag
+
 jobs:
-  build:
+  version:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     permissions:
@@ -19,37 +22,36 @@ jobs:
         ref: ${{ github.event.pull_request.merge_commit_sha }}
         fetch-depth: '0'
 
-    - name: Set vars
-      run: |
-        echo "GLOBAL=$GITHUB_SHA" >> $GITHUB_ENV
-        echo "JOB=$GITHUB_RUN_ID" >> $GITHUB_ENV
-
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@v1 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         WITH_V: true
-        PRERELEASE: false
+        PRERELEASE: ${{ env.PRERELEASE }}
         DEFAULT_BUMP: patch
 
     - name: Remove latest tag and get new tag
       id: get_tag
+      if: ${{ env.PRERELEASE == 'false' }}
       run: |
         if git tag | grep latest; then git push --delete origin latest; fi
         echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
     - name: Get recent merged branch name
       id: get_branch_name
+      if: ${{ env.PRERELEASE == 'false' }}
       uses: tonynguyenit18/github-action-custom-vars@v1
     - run: echo $RECENT_MERGED_BRANCH_NAME
     - run: echo "BRANCH=$RECENT_MERGED_BRANCH_NAME" >> $GITHUB_ENV
 
     - name: Create release for the new tag
+      if: ${{ env.PRERELEASE == 'false' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh release create ${{ env.TAG }}--repo="$GITHUB_REPOSITORY" --title=${{ env.BRANCH }} --generate-notes
+      run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.BRANCH }}  --generate-notes
 
     - name: Create new latest tag for the release
+      if: ${{ env.PRERELEASE == 'false' }}
       run: |
         git tag -f latest
         git push origin --tag
