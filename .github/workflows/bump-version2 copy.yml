@@ -35,7 +35,7 @@ jobs:
         tag=$(git describe --tags --abbrev=0)
         echo "TAG=$tag"
 
-      - name: Delete latest release
+    - name: Delete latest release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh release delete latest --repo="$GITHUB_REPOSITORY" --cleanup-tag -y
