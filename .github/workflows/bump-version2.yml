@@ -30,9 +30,13 @@ jobs:
     - name: Refresh latest tag
       run: |
         git tag -d latest
-  
-    - name: Release latest
-      uses: ncipollo/release-action@v1
-      with:
+
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: latest
-        commit: ${{ github.event.pull_request.merge_commit_sha }}
+      run: |
+        gh release create "$tag" \
+        --repo="$GITHUB_REPOSITORY" \
+        --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+        --generate-notes
