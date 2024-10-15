@@ -26,8 +26,8 @@ jobs:
         WITH_V: true
         PRERELEASE: false
         DEFAULT_BUMP: patch
-        
-    - name: Force push `latest` tag
-      run: |
-        git tag -d latest
-        git tag latest
+
+    - name: Push changes
+      uses: ncipollo/release-action@v1
+        with:
+          tag: latest
