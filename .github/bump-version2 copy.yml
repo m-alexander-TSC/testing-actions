@@ -42,6 +42,5 @@ jobs:
     - name: Create latest tag for new release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: $tag
+        tag: "$tag"
       run: git tag latest -m "Release $tag"
-  
