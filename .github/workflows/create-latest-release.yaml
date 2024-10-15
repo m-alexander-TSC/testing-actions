@@ -1,4 +1,3 @@
-# example 2: on merge to master from pull request (recommended)
 name: Bump version
 on:
   pull_request:
@@ -6,9 +5,6 @@ on:
       - closed
     branches:
       - main
-
-env:
-  PRERELEASE: false # This should be set to false, set to true if you want to create a prerelease tag
 
 jobs:
   version:
@@ -27,29 +23,23 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         WITH_V: true
-        PRERELEASE: ${{ env.PRERELEASE }}
+        PRERELEASE: false
         DEFAULT_BUMP: patch
 
     - name: Remove latest tag and get new tag
-      id: get_tag
-      if: ${{ env.PRERELEASE == 'false' }}
       run: |
         if git tag | grep latest; then git push --delete origin latest; fi
-        echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
-    - name: Get recent merged branch name
-      id: get_branch_name
-      uses: tonynguyenit18/github-action-custom-vars@v1
-    - run: echo $RECENT_MERGED_BRANCH_NAME
-    - run: echo "BRANCH=$RECENT_MERGED_BRANCH_NAME" >> $GITHUB_ENV
+    - name: Set tag as an environment variable
+      run: |
+        echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
     - name: Create release for the new tag
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.BRANCH }}  --generate-notes
+      run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.TAG }}  --generate-notes
 
     - name: Create new latest tag for the release
-      if: ${{ env.PRERELEASE == 'false' }}
       run: |
         git tag -f latest
         git push origin --tag
