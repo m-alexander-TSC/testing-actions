@@ -27,3 +27,5 @@ As a consumer of this repo, you get two choices for how to do versioning:
 
 ## References
 Tagging task: https://github.com/anothrNick/github-tag-action
+
+minor
