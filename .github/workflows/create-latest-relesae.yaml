@@ -29,16 +29,19 @@ jobs:
         PRERELEASE: false
         DEFAULT_BUMP: patch
 
-    - name: Remove latest tag get new tag just created
+    - name: Remove latest tag
       run: |
         if git tag | grep latest; then git push --delete origin latest; fi
         tag=$(git describe --tags --abbrev=0)
-        echo "TAG=$tag"
+
+    - name: Get new tag
+      id: get_tag
+      run: echo "tag=$tag"
 
     - name: Create release for the new tag
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        Tag: ${{ env.TAG }}
+        Tag: ${{ steps.get_tag.outputs.tag }}
       run: gh release create $Tag --repo="$GITHUB_REPOSITORY" --title=$Tag --generate-notes
 
     - name: Create new latest tag for the release
