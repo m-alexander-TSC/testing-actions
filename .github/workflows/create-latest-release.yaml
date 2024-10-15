@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  PRERELEASE: false # This should be set to false, set to true if you want to create a prerelease tag
+  PRERELEASE: true # This should be set to false, set to true if you want to create a prerelease tag
 
 jobs:
   version:
