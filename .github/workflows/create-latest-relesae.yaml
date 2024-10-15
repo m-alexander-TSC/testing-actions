@@ -32,14 +32,11 @@ jobs:
         PRERELEASE: false
         DEFAULT_BUMP: patch
 
-    - name: Remove latest tag
+    - name: Remove latest tag and get new tag
+      id: get_tag
       run: |
         if git tag | grep latest; then git push --delete origin latest; fi
-        tag=$(git describe --tags --abbrev=0)
-
-    - name: Get new tag
-      id: get_tag
-      run: echo "TAG=$tag" >> $GITHUB_ENV
+        echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
     - name: Get recent merged branch name
       id: get_branch_name
