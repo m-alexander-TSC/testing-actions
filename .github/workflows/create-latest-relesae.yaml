@@ -41,8 +41,7 @@ jobs:
     - name: Create release for the new tag
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        Tag: ${{ steps.get_tag.outputs.tag }}
-      run: gh release create $Tag --repo="$GITHUB_REPOSITORY" --title=$Tag --generate-notes
+      run: gh release create ${{ steps.get_tag.outputs.tag }} --repo="$GITHUB_REPOSITORY" --title=${{ github.event.pull_request.merge_commit_sha }} --generate-notes
 
     - name: Create new latest tag for the release
       run: |
