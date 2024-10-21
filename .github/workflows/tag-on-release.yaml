@@ -12,10 +12,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: create latest tag
       run: |
-        echo "Drop and readd latest tag"
-        if git tag | grep latest; then 
-          git tag --delete latest
-          git push origin --tag
-        fi
-        git tag latest
+        if git tag | grep latest; then git push --delete origin latest; fi
+        git tag -f latest
         git push origin --tag
