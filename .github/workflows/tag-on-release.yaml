@@ -12,7 +12,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: create latest tag
       run: |
-        git tag --delete latest
-        git push origin --tagi
+        if git tag | grep latest; then
+          git tag --delete latest
+          git push origin --tagi
+        fi
         git tag -f latest
         git push origin --tag
