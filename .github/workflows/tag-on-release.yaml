@@ -10,13 +10,8 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v4
-    - name: delete latest tag
-      run: |
-        if git tag | grep latest; then
-          git tag --delete latest
-          git push origin --tag
-        fi
     - name: create latest tag
       run: |
+        if git tag | grep latest; then git push origin :refs/tags/latest -f; fi
         git tag -f latest
         git push origin --tag
