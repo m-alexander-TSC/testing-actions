@@ -1,0 +1,17 @@
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  tag:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: create latest tag
+      run: |
+        if git tag | grep latest; then git push --delete origin latest; fi
+        git tag -f latest
+        git push origin --tag
