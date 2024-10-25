@@ -18,6 +18,10 @@ jobs:
         ref: ${{ github.event.pull_request.merge_commit_sha }}
         fetch-depth: '0'
 
+    - name: Remove latest tag if exists
+      run: |
+      if git tag | grep latest; then git push --delete origin latest; fi
+
     - name: Bump version and push tag
       id: bump-version
       uses: anothrNick/github-tag-action@v1 
@@ -28,15 +32,32 @@ jobs:
 
     - name: output tags
       run: |
-        git describe --tags --abbrev=0
-        echo new_tag=$(echo ${{ steps.bump-version.outputs.new_tag }})
-        echo "TAG=$(echo ${{ steps.bump-version.outputs.new_tag }} |
+        echo "MAJOR=$(echo ${{ steps.bump-version.outputs.new_tag }} |
         cut -d'.' -f1)" >> $GITHUB_ENV
+        echo "MINOR=$(echo ${{ steps.bump-version.outputs.new_tag }} |
+        cut -d'.' -f1,2)" >> $GITHUB_ENV
 
-    - name: more output
+    - name: Force update the major and minor tags
       run: |
-        echo "TAG="${{ env.TAG }}
+        echo 'TAG='${{ env.TAG }}
         echo ${{ env.TAG }}
         echo $TAG
 
+    - name: Update major tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: ${{ env.MAJOR }}
+        description: Major tag
 
+    - name: Update minor tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: echo ${{ steps.bump-version.outputs.new_tag }} | cut -d'.' -f1,2
+        description: Minor tag
+
+    - name: Update latest tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: latest
+        description: Latest tag
+  
