@@ -1,13 +1,12 @@
 # testing-actions
 
 ## Action testing releasing semantic versions
-- A GitHub action creates a new semver version tag and release.  
-- To advance the version, put `#patch`, `#minor`, or `#major` in a commit message.  Which ever is the highest increment will be applied (major/minor/patch)
+- A GitHub action creates a new semver version tag and release on merge to main.  
+  - This is set to default to a patch release.
+  - To advance a minor or major version, put `#minor`, or `#major` in a commit message.  Which ever is the highest increment will be applied (major/minor/patch).
 
-### Want tagging to work like this [ecalidraw link](https://excalidraw.com/#json=69fKwjcotDyda3cG_igb6,IJSVoDb-0pxZfC2UPZglIg)
- 
 ## Referencing templates in build & deploy yaml pipelines
-As a consumer of this repo, you get two choices for how to do versioning:
+As a consumer of this repo there are two ways to do determine whihch version is used:
 - by git branch (`ref: refs/heads/<branch name>`)
 ```
 resources:
@@ -30,7 +29,7 @@ resources:
 ```
 
 ### Semver tags
-Tags are created and maintained to point at major and minor versions.  For each relase there will be a full version tag, `vX.Y.Z`.  Minor and major tags, `vX` and `vX.Y`, are created or updated depending on the release.  
+Tags are created and maintained to point at major and minor versions.  For each relase there will be a new full version tag, `vX.Y.Z`, created.  Minor and major tags, `vX` and `vX.Y`, are created or updated 
 
 - For a specific version:
 ```
@@ -45,5 +44,14 @@ Tags are created and maintained to point at major and minor versions.  For each 
       ref: refs/tags/vX
 ```
 
+### `latest` tag
+Additionally, there is a latest tag which will always point to the latest release
+```
+      ref: refs/tags/latest
+```
+
 ## References
-Tagging task: https://github.com/anothrNick/github-tag-action
+### Actions
+- Version & tag: https://github.com/anothrNick/github-tag-action
+- Create or replace tag: https://github.com/EndBug/latest-tag
+
