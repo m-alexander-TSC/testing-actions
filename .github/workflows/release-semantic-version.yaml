@@ -20,7 +20,7 @@ jobs:
 
     - name: Remove latest tag if exists
       run: |
-      if git tag | grep latest; then git push --delete origin latest; fi
+        if git tag | grep latest; then git push --delete origin latest; fi
 
     - name: Bump version and push tag
       id: bump-version
