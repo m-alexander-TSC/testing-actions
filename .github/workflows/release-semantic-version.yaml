@@ -29,5 +29,9 @@ jobs:
     - name: output tags
       run: |
         git describe --tags --abbrev=0
-        echo "TAG=${{ steps.bump-version.outputs.new_tag }} >> $GITHUB_ENV
+        echo new_tag=$(echo ${{ steps.bump-version.outputs.new_tag }}
+        echo "TAG=$(echo ${{ steps.bump-version.outputs.new_tag }} |
+        cut -d'.' -f1) >> $GITHUB_ENV
         echo "TAG=$TAG"
+
+
