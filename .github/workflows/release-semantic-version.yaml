@@ -34,7 +34,7 @@ jobs:
         echo "MINOR=$(echo ${{ steps.bump-version.outputs.new_tag }} |
         cut -d'.' -f1,2)" >> $GITHUB_ENV
 
-    - name: Create release for the new tag
+    - name: Create release with the new tag
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.TAG }}  --generate-notes
