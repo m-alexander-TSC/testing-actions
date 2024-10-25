@@ -24,3 +24,4 @@ As a consumer of this repo, you get two choices for how to do versioning:
 Tagging task: https://github.com/anothrNick/github-tag-action
 
 - test
+test
