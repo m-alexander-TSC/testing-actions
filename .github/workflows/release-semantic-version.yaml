@@ -1,8 +1,10 @@
-name: On release bump version
+name: Release Semantic Version
 on:
-  release:
+  pull_request:
     types:
-      - created
+      - closed
+    branches:
+      - main
 
 jobs:
   version:

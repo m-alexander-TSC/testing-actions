@@ -1,4 +1,4 @@
-name: Release Semantic Version
+name: Create latest release
 on:
   pull_request:
     types:
