@@ -19,9 +19,15 @@ jobs:
         fetch-depth: '0'
 
     - name: Bump version and push tag
+      id: bump-version
       uses: anothrNick/github-tag-action@v1 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         WITH_V: true
-        PRERELEASE: false
         DEFAULT_BUMP: patch
+
+    - name: output tags
+      run: |
+        git describe --tags --abbrev=0
+        echo "TAG=${{ steps.bump-version.outputs.new_tag }} >> $GITHUB_ENV
+        echo "TAG=$TAG"
