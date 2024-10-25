@@ -32,6 +32,6 @@ jobs:
         echo new_tag=$(echo ${{ steps.bump-version.outputs.new_tag }}
         echo TAG=$(echo ${{ steps.bump-version.outputs.new_tag }} |
         cut -d'.' -f1) >> $GITHUB_ENV
-        echo "TAG=$TAG"
+        echo "TAG="${{ env.TAG}}
 
 
