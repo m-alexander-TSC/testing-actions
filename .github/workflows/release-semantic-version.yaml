@@ -2,9 +2,9 @@ name: Release Semantic Version
 on:
   pull_request:
     types:
-      - closed
+    - closed
     branches:
-      - main
+    - main
 
 jobs:
   version:
@@ -20,9 +20,9 @@ jobs:
 
     - name: Bump version and push tag
       id: bump-version
-      uses: anothrNick/github-tag-action@v1 
+      uses: anothrNick/github-tag-action@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
         DEFAULT_BUMP: patch
 
@@ -38,7 +38,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh release create ${{ env.TAG }} --repo="$GITHUB_REPOSITORY" --title=${{ env.TAG }}  --generate-notes
-  
+
     - name: Update major tag
       uses: EndBug/latest-tag@v1
       with:
@@ -56,4 +56,3 @@ jobs:
       with:
         ref: latest
         description: Latest release tag
-  
