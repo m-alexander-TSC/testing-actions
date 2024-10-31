@@ -5,7 +5,7 @@ on:
       - closed
     branches:
       - main
-  
+
 jobs:
   validations:
     if: github.event.pull_request.merged == true
@@ -22,11 +22,11 @@ jobs:
           # Branch of pull request
           # param default - (github.event.pull_request.head.ref )
           #pull-request-branch: ''
-          
+
           # Token with credentials for repository
           # is required
-          gh-token: ${{ secrets.GITHUB_TOKEN }} 
-      
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
           # React of push in default branch
           # param default: false
           #reactive: ''
