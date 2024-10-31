@@ -2,9 +2,9 @@ name: Create latest release
 on:
   pull_request:
     types:
-      - closed
+    - closed
     branches:
-      - main
+    - main
 
 jobs:
   version:

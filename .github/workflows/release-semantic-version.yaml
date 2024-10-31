@@ -2,9 +2,9 @@ name: Release Semantic Version
 on:
   pull_request:
     types:
-      - closed
+    - closed
     branches:
-      - main
+    - main
 
 jobs:
   version:

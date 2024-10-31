@@ -2,9 +2,9 @@ name: validations
 on:
   pull_request:
     types:
-      - closed
+    - closed
     branches:
-      - main
+    - main
 
 jobs:
   validations:
