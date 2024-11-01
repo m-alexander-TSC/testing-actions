@@ -2,8 +2,8 @@ name: check if PR is rebased
 on:
   push:
     branches:
-      - main
-  
+    - main
+
 jobs:
   check-rebase:
     runs-on: ubuntu-latest
