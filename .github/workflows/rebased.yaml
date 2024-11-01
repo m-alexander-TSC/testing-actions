@@ -4,6 +4,8 @@ on:
     branches:
     - main
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   check-rebase:
     runs-on: ubuntu-latest
@@ -14,7 +16,7 @@ jobs:
       id: pr-is-rebased
       uses: badico-cloud-hub/pr-is-rebased@v1
       with:
-        gh-token: ${{ secrets.GITHUB_TOKEN }}
+        gh-token: ${{ env.GH_TOKEN }}
         # React of push in default branch
         # param default: false
         reactive: true
