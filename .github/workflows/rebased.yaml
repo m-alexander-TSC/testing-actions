@@ -1,32 +1,21 @@
-name: validations
+name: check if PR is rebased
 on:
-  pull_request:
-    types:
-    - closed
+  push:
     branches:
-    - main
-
+      - main
+  
 jobs:
-  validations:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-22.04
+  check-rebase:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-    - uses: badico-cloud-hub/pr-is-rebased@v1
+    - name: pr-is-rebased
+      id: pr-is-rebased
+      uses: badico-cloud-hub/pr-is-rebased@v1
       with:
-        # Default branch of repository
-        # param default - (github.event.repository.default_branch)
-        #default-branch: ''
-
-        # Branch of pull request
-        # param default - (github.event.pull_request.head.ref )
-        #pull-request-branch: ''
-
-        # Token with credentials for repository
-        # is required
         gh-token: ${{ secrets.GITHUB_TOKEN }}
-
-        # React of push in default branch
-        # param default: false
-        #reactive: ''
+    - name: pr number
+      run: echo ${{ steps.pr-is-rebased.outputs.pr-number}}
+    - name: is rebased
+      run: echo ${{ steps.pr-is-rebased.outputs.rebased}}
