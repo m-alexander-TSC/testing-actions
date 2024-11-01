@@ -15,6 +15,9 @@ jobs:
       uses: badico-cloud-hub/pr-is-rebased@v1
       with:
         gh-token: ${{ secrets.GITHUB_TOKEN }}
+        # React of push in default branch
+        # param default: false
+        reactive: true
     - name: pr number
       run: echo ${{ steps.pr-is-rebased.outputs.pr-number}}
     - name: is rebased
