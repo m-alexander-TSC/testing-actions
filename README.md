@@ -55,3 +55,4 @@ Additionally, there is a latest tag which will always point to the latest releas
 - Version & tag: https://github.com/anothrNick/github-tag-action
 - Create or replace tag: https://github.com/EndBug/latest-tag
 
+v91
