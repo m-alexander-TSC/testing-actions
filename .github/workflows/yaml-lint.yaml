@@ -1,4 +1,4 @@
-name: Yaml Lint
+name: yaml-lint
 on: push
 
 jobs:
