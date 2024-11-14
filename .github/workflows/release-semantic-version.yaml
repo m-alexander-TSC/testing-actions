@@ -24,8 +24,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
-        DEFAULT_BUMP: patch
-        INITIAL_VERSION: 90.0.0
 
     - name: output tags
       run: |
